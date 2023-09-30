@@ -1,24 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import './App.scss';
+import Todo from './components/todo/Todo';
+import {Item} from './model';
 
-function App() {
+const App: React.FC = () => {
+  const [inputValue, setInputValue] = useState<string>("")
+  // const [todoList,setTodoList]=useState<Item[]>([])
+  const [todoList,setTodoList]=useState<string[]>([])
+
+  const addTodo = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.keyCode === 13) {
+      if(inputValue !== ""){
+        // setTodoList([...todoList, {id:todoList.length,todo:inputValue}])
+        setTodoList([...todoList,inputValue])
+      } 
+      setInputValue("")
+    }
+  }
+  const changeValue = (e:React.ChangeEvent<HTMLInputElement> ):void => {
+    setInputValue(e.target.value)
+  }
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>To do list</h1>
+      <div className="container">
+        <input type="text"
+          className='textInput'
+          onKeyDown={addTodo}
+          onChange = {changeValue}
+          value = {inputValue}
+        />
+        <div className="todoList">
+          {todoList && todoList.map(todo => (
+            <Todo text={todo} setTodoList={setTodoList} todoList={todoList}/>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,0 +1,21 @@
+.todo{
+    padding: 20px;
+    background-color: rgb(44, 177, 112);
+    color:white;
+    display:flex;
+    justify-content: space-between;
+    .iconsContainer{
+        display:flex;
+        gap:10px;
+        & svg{
+            cursor: pointer;
+        }
+    }
+    &.isDone{
+        background-color: rgb(133, 179, 158);
+        & span{
+            text-decoration: line-through;
+            color:white;
+        }
+    }
+}
